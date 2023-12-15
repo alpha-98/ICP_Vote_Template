@@ -86,7 +86,7 @@ impl Storable for Proposal {
 
 impl BoundedStorable for Proposal {
     const MAX_SIZE: u32 = MAX_VALUE_SIZE;
-    const IS_FIXED_SIZE: bool = false;
+    const IS_FIXED_SIZE: bool = false; // for stable binary tree where we are going to store the proposal object.
 }
 
 thread_local! {
