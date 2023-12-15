@@ -7,10 +7,27 @@ type Memory = VirtualMemory<DefaultMemoryImpl>;
 
 const MAX_VALUE_SIZE: u32 = 5000;
 
-// impl Storable {
-//     fn to_bytes(&self) -> Cow<[u8]> {
-//         Cow::Owned(Encode!(self).unwrap())
-//     }
+/* 
+    First thing to do in any smart contract is defining the types that
+    we need to store in our state. OR
+    This can be the return type of the functions as well as the arguments.
+*/
+
+/*
+    For all of the `structs` we will drive the `candid type` and `deserialize`.
+    We are doing this so that ICP will know how to deserialize it. AND
+    We will use the default candid type for creating candid file and accessing below choice.
+*/
+
+// enums are only for return_types
+
+#[derive(Debug, CandidType, Deserialize)]
+
+enum Choice {
+    Approve,
+    Reject,
+    Pass,
+}
 
 //     fn from_bytes(bytes: Cow<[u8]>) -> Self {
 //         Decode!(bytes.as_ref(), Self).unwrap()
