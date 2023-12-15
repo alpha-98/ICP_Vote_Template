@@ -1,15 +1,13 @@
 use candid::{CandidType, Decode, Deserialize, Encode, Principal};
-use ic_cdk::api::call;
 use ic_stable_structures::memory_manager::{MemoryId, MemoryManager, VirtualMemory};
 use ic_stable_structures::{BoundedStorable, DefaultMemoryImpl, StableBTreeMap, Storable};
-use std::collections::BTreeMap;
 use std::{borrow::Cow, cell::RefCell};
 
 type Memory = VirtualMemory<DefaultMemoryImpl>;
 
 const MAX_VALUE_SIZE: u32 = 5000;
 
-/* 
+/*
     First thing to do in any smart contract is defining the types that
     we need to store in our state. OR
     This can be the return type of the functions as well as the arguments.
@@ -63,7 +61,7 @@ struct Proposal {
 }
 
 #[derive(Debug, CandidType, Deserialize)]
-/* 
+/*
     create propsal is justfor an argument type. SO
     We don't need to store it in Storable.
 */
@@ -116,7 +114,7 @@ fn get_proposal_count() -> u64 {
 }
 
 #[ic_cdk::update]
-fn Create_proposal(key: u64, proposal: CreateProposal) -> Option<Proposal> {
+fn create_proposal(key: u64, proposal: CreateProposal) -> Option<Proposal> {
     let value: Proposal = Proposal {
         description: proposal.description,
         approve: 0u32,
