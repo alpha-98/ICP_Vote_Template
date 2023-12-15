@@ -89,8 +89,19 @@ impl BoundedStorable for Proposal {
     const IS_FIXED_SIZE: bool = false; // for stable binary tree where we are going to store the proposal object.
 }
 
+/*
+    Thread local esures that we are dealing with our local thread.
+    Since ICP smart contract are not multi-threaded we will just be working on our local thread.
+*/
 thread_local! {
+    // Memory manager is going to be the same for most of the smart contracts that we're going to implement.
     static MEMORY_MANAGER: RefCell<MemoryManager<DefaultMemoryImpl>> = RefCell::new(MemoryManager::init(DefaultMemoryImpl::default()));
+
+    // For Storing the Proposal map.
+    // It's enusre that our state is going to be preserved among updates.
+    static PROPOSAL_MAP: RefCell<StableBTreeMap<u64,Proposal,Memory>> = RefCell::new(StableBTreeMap::init(MEMORY_MANAGER.with(|m| m.borrow().get(MemoryId::new(0)))));
+
+}
 
 }
 
