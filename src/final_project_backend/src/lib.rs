@@ -60,6 +60,15 @@ struct Proposal {
     owner: candid::Principal, // Owner of propsal and candid principal and SYNTAX of accessing principal.
 }
 
+#[derive(Debug, CandidType, Deserialize)]
+/* 
+    create propsal is justfor an argument type. SO
+    We don't need to store it in Storable.
+*/
+struct CreateProposal {
+    description: String,
+    is_active: bool,
+}
 thread_local! {
     static MEMORY_MANAGER: RefCell<MemoryManager<DefaultMemoryImpl>> = RefCell::new(MemoryManager::init(DefaultMemoryImpl::default()));
 
