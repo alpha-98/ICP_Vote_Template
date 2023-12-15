@@ -69,6 +69,20 @@ struct CreateProposal {
     description: String,
     is_active: bool,
 }
+
+/*
+    We are implementing the storable for the state we are going to store.
+    Inside our state we are going to hold Proposal struct.
+*/
+impl Storable for Proposal {
+    fn to_bytes(&self) -> Cow<[u8]> {
+        Cow::Owned(Encode!(self).unwrap())
+    }
+
+    fn from_bytes(bytes: Cow<[u8]>) -> Self {
+        Decode!(bytes.as_ref(), Self).unwrap()
+    }
+}
 thread_local! {
     static MEMORY_MANAGER: RefCell<MemoryManager<DefaultMemoryImpl>> = RefCell::new(MemoryManager::init(DefaultMemoryImpl::default()));
 
