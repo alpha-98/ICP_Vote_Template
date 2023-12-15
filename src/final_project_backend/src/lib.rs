@@ -44,10 +44,21 @@ enum VoteError {
     UpdateError,
 }
 
-// impl BoundedStorable {
-//     const MAX_SIZE: u32 = MAX_VALUE_SIZE;
-//     const IS_FIXED_SIZE: bool = false;
-// }
+/*
+    Create actual Propsal itself.
+    Principal is what stands as a wallet address in ICP.
+*/
+#[derive(Debug, CandidType, Deserialize)]
+
+struct Proposal {
+    description: String,
+    approve: u32,
+    reject: u32,
+    pass: u32,
+    is_active: bool,
+    voted: Vec<candid::Principal>, // Vector of the user who have voted for this proposal.
+    owner: candid::Principal, // Owner of propsal and candid principal and SYNTAX of accessing principal.
+}
 
 thread_local! {
     static MEMORY_MANAGER: RefCell<MemoryManager<DefaultMemoryImpl>> = RefCell::new(MemoryManager::init(DefaultMemoryImpl::default()));
