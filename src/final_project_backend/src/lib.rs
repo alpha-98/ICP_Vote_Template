@@ -29,10 +29,20 @@ enum Choice {
     Pass,
 }
 
-//     fn from_bytes(bytes: Cow<[u8]>) -> Self {
-//         Decode!(bytes.as_ref(), Self).unwrap()
-//     }
-// }
+/*
+    It's OPTIONAL!
+    We have VoteError so front-end know what went wrong
+    in case we have face any problem.
+*/
+#[derive(Debug, CandidType, Deserialize)]
+
+enum VoteError {
+    AlreadyVoted,
+    ProposalIsNotActive,
+    NoSuchProposal,
+    AccessRejected,
+    UpdateError,
+}
 
 // impl BoundedStorable {
 //     const MAX_SIZE: u32 = MAX_VALUE_SIZE;
