@@ -83,6 +83,12 @@ impl Storable for Proposal {
         Decode!(bytes.as_ref(), Self).unwrap()
     }
 }
+
+impl BoundedStorable for Proposal {
+    const MAX_SIZE: u32 = MAX_VALUE_SIZE;
+    const IS_FIXED_SIZE: bool = false;
+}
+
 thread_local! {
     static MEMORY_MANAGER: RefCell<MemoryManager<DefaultMemoryImpl>> = RefCell::new(MemoryManager::init(DefaultMemoryImpl::default()));
 
